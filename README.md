@@ -294,22 +294,6 @@ Just a browser, a location, and several weather opinions.
 
 ---
 
-## Related SFLA Projects
-
-- **TGG Grid — The Greco Grid**  
-  https://mikejamesgreco.github.io/tgg-grid/
-
-- **TGDS Data Scope — The Greco Data Scope**  
-  https://mikejamesgreco.github.io/tgds-scope/
-
-- **TGJVM Monitor — The Greco JVM Monitor**  
-  https://mikejamesgreco.github.io/tgjvm-monitor/
-
-- **SFLA Home**  
-  https://mikejamesgreco.github.io/
-
----
-
 ## License
 
 License information will be added to the repository's `LICENSE` file.
