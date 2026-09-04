@@ -15,17 +15,7 @@ https://mikejamesgreco.github.io/tgw-weather/
 
 ## Screenshot
 
-Add a repository screenshot as:
-
-```text
-screenshot.jpeg
-```
-
-Then enable the image below:
-
-```markdown
 ![TGW Weather screenshot](screenshot.jpeg)
-```
 
 ## What TGW Weather Does
 
@@ -181,9 +171,5 @@ TGW Weather follows the same general SFLA principles as the other Greco browser 
   https://mikejamesgreco.github.io/
 
 ## License
-
-Add the license you want to use for the repository in `LICENSE`.
-
----
 
 © mikejamesgreco.me LLC. All rights reserved.
