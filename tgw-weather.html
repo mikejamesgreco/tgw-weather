@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="TGW Weather — compare today's forecast from multiple weather services and see a simple consensus.">
+<title>TGW Weather — The Greco Weather</title>
+<style>
+*{box-sizing:border-box}:root{--bg:#eef3f8;--card:#fff;--text:#172033;--muted:#64748b;--line:#d9e2ec;--accent:#2563eb;--accent2:#1d4ed8;--soft:#eff6ff;--ok:#15803d;--err:#b91c1c}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}body{line-height:1.45}button,input{font:inherit}.shell{max-width:1080px;margin:auto;padding:16px 14px 34px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.brand{font-size:20px;font-weight:900}.brand span{display:block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700}@keyframes blink{0%,100%{opacity:.45}50%{opacity:1}}.brand span{animation:blink 3.2s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.brand span{animation:none;opacity:.75}}.version{font-size:11px;color:var(--muted)}.hero,.settings{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 8px 26px rgba(15,23,42,.06)}.hero h1{font-size:clamp(28px,7vw,44px);line-height:1.02;letter-spacing:-.04em;margin:0 0 8px}.hero p{margin:0;color:var(--muted);max-width:760px}.search{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:16px}.search input,.field input{width:100%;border:1px solid #bdc9d6;border-radius:10px;padding:12px;background:#fff}.btn{border:1px solid var(--line);border-radius:10px;padding:11px 14px;background:#fff;color:#334155;font-weight:800;cursor:pointer}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:hover{background:var(--accent2)}.btn:disabled{opacity:.55;cursor:wait}.subrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:9px}.hint,.status,.small{font-size:12px;color:var(--muted)}.status.ok{color:var(--ok);font-weight:700}.status.error{color:var(--err);font-weight:700}.location{display:none;margin-top:14px}.location.show{display:block}.location strong{font-size:15px}.location small{display:block;color:var(--muted)}.consensus{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.metric{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}.metric .label{font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.07em}.metric .value{font-size:26px;font-weight:900;margin-top:2px}.metric .sub{font-size:11px;color:var(--muted)}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:18px 0 8px}.section-head h2{font-size:18px;margin:0}.section-head p{font-size:11px;color:var(--muted);margin:0}.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px}table{width:100%;min-width:790px;border-collapse:collapse}th,td{padding:11px;border-bottom:1px solid #edf1f5;text-align:left;vertical-align:top;font-size:13px}th{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.06em;background:#f8fafc}.source{font-weight:900}.badge{display:inline-block;margin-top:4px;font-size:9px;font-weight:800;text-transform:uppercase;padding:3px 6px;border-radius:999px;background:var(--soft);color:#1d4ed8}.badge.optional{background:#fff7ed;color:#9a3412}.note{font-size:10px;color:var(--muted);margin-top:4px}a{color:var(--accent);text-decoration:none;font-weight:700}a:hover{text-decoration:underline}.cards-mobile{display:none}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.card-top{display:flex;justify-content:space-between;gap:10px}.card h3{margin:0}.desc{font-size:13px;color:#475569;margin:8px 0 10px}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.mini{background:#f8fafc;border-radius:8px;padding:8px}.mini span{display:block;font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:800}.settings{margin-top:18px}.settings summary{cursor:pointer;font-weight:900}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.field label{display:block;font-size:11px;font-weight:800;color:#475569;margin-bottom:5px}.field small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.provider-settings{display:grid;gap:10px;margin-top:12px}.provider-setting{border:1px solid #e2e8f0;border-radius:11px;padding:12px;background:#f8fafc}.provider-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.provider-name{font-size:13px;font-weight:900}.provider-meta{font-size:10px;color:var(--muted);margin-top:2px}.toggle{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:#475569;white-space:nowrap}.toggle input{width:17px;height:17px;accent-color:var(--accent)}.key-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:9px}.key-row input{width:100%;border:1px solid #bdc9d6;border-radius:10px;padding:10px;background:#fff}.api-link{font-size:11px;white-space:nowrap}
+.save-panel{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid #e2e8f0}
+.save-summary{font-size:11px;color:var(--muted)}
+.save-summary strong{color:#334155}
+.save-feedback{display:none;align-items:center;gap:7px;font-size:11px;font-weight:800;color:#166534;background:#ecfdf5;border:1px solid #bbf7d0;padding:7px 9px;border-radius:9px}
+.save-feedback.show{display:inline-flex}
+.btn.saved{background:#15803d;border-color:#15803d;color:#fff}
+.provider-setting.disabled{opacity:.58}
+.provider-setting.no-key .provider-meta::after{content:" · no key saved";color:#b45309;font-weight:800}
+.provider-status{font-size:10px;font-weight:800;margin-top:5px}
+.provider-status.ready{color:#15803d}
+.provider-status.skipped{color:#b45309}
+footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted)}@media(max-width:700px){.search{grid-template-columns:1fr}.search .btn{width:100%}.consensus{grid-template-columns:1fr 1fr}.table-wrap{display:none}.cards-mobile{display:grid;gap:10px}.settings-grid{grid-template-columns:1fr}.key-row{grid-template-columns:1fr}.api-link{justify-self:start}.hero{padding:15px}}
+
+.brand-docs{display:block;width:max-content;margin-top:5px;font-size:11px;font-weight:800;color:var(--accent);text-decoration:none;letter-spacing:0;text-transform:none;animation:none}
+.brand-docs:hover{text-decoration:underline}
+.help-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.52);z-index:9999}
+.help-modal.open{display:flex}
+.help-card{width:min(760px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 24px 70px rgba(15,23,42,.28);padding:20px}
+.help-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.help-head h2{margin:0;font-size:20px}
+.help-close{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:7px 10px;cursor:pointer;font-weight:800}
+.help-card h3{margin:18px 0 6px;font-size:14px}
+.help-card p,.help-card li{font-size:12px;line-height:1.55;color:#475569}
+.help-card ul{padding-left:19px}
+.footer-links{display:inline-flex;gap:8px;align-items:center}
+.footer-links a{color:inherit}
+
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="brand">
+    TGW Weather
+    <span>The Greco Weather</span>
+    <a class="brand-docs" href="https://github.com/mikejamesgreco/tgw-weather#readme" target="_blank" rel="noopener noreferrer">GitHub / README ↗</a>
+  </div>
+</header>
+<section class="hero">
+<h1>Today's weather.<br>More than one opinion.</h1>
+<p>Compare today's forecast from multiple weather services, then see a simple consensus for temperature, rain, and wind.</p>
+<div class="search"><input id="locationInput" placeholder="ZIP code, city/state, or latitude,longitude" aria-label="Location"><button class="btn" id="helpBtn" type="button">Help</button>
+<button class="btn primary" id="forecastBtn">Get Forecast</button></div>
+<div class="subrow"><div class="hint">Examples: <b>49424</b> · <b>Holland, MI</b> · <b>42.79,-86.11</b></div><div class="status" id="status">Ready</div></div>
+<div class="location" id="locationBox"><strong id="locationName"></strong><small id="locationMeta"></small></div>
+</section>
+<section class="consensus">
+<div class="metric"><div class="label">Consensus High</div><div class="value" id="avgHigh">—</div><div class="sub" id="highRange">Waiting for forecasts</div></div>
+<div class="metric"><div class="label">Consensus Low</div><div class="value" id="avgLow">—</div><div class="sub" id="lowRange">Waiting for forecasts</div></div>
+<div class="metric"><div class="label">Chance of Rain</div><div class="value" id="avgRain">—</div><div class="sub" id="rainRange">Provider average</div></div>
+<div class="metric"><div class="label">Wind Speed</div><div class="value" id="avgWind">—</div><div class="sub" id="windRange">Provider average</div></div>
+<div class="metric"><div class="label">Sources Reporting</div><div class="value" id="sourceCount">0</div><div class="sub" id="sourceSub">No forecast yet</div></div>
+</section>
+<div class="section-head"><h2>Forecast Comparison</h2><p>Normalized to °F and mph.</p></div>
+<div class="table-wrap"><table><thead><tr><th>Source</th><th>Forecast</th><th>High</th><th>Low</th><th>Rain</th><th>Wind</th><th>Details</th></tr></thead><tbody id="forecastRows"></tbody></table></div>
+<div class="cards-mobile" id="forecastCards"></div>
+<details class="settings"><summary>Weather Services & API Keys</summary>
+<div class="provider-settings">
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">Open-Meteo</div><div class="provider-meta">Global · no API key required</div></div><label class="toggle"><input id="enableOpenMeteo" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusOpenMeteo"></div>
+  </div>
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">U.S. National Weather Service (NWS)</div><div class="provider-meta">United States · no API key required</div></div><label class="toggle"><input id="enableNws" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusNws"></div>
+  </div>
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">WeatherAPI.com</div><div class="provider-meta">Free tier · API key required</div></div><label class="toggle"><input id="enableWeatherApi" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusWeatherApi"></div>
+    <div class="key-row"><input id="weatherApiKey" type="password" placeholder="WeatherAPI.com API key"><a class="api-link" href="https://www.weatherapi.com/signup.aspx" target="_blank" rel="noopener noreferrer">Get free API key ↗</a></div>
+  </div>
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">OpenWeather</div><div class="provider-meta">Free account · API key required</div></div><label class="toggle"><input id="enableOpenWeather" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusOpenWeather"></div>
+    <div class="key-row"><input id="openWeatherKey" type="password" placeholder="OpenWeather API key"><a class="api-link" href="https://home.openweathermap.org/users/sign_up" target="_blank" rel="noopener noreferrer">Get free API key ↗</a></div>
+  </div>
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">Visual Crossing</div><div class="provider-meta">Free plan · 1,000 weather records/day</div></div><label class="toggle"><input id="enableVisualCrossing" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusVisualCrossing"></div>
+    <div class="key-row"><input id="visualCrossingKey" type="password" placeholder="Visual Crossing API key"><a class="api-link" href="https://www.visualcrossing.com/sign-up/" target="_blank" rel="noopener noreferrer">Get free API key ↗</a></div>
+  </div>
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">Tomorrow.io</div><div class="provider-meta">Free API plan · limited daily/hourly calls</div></div><label class="toggle"><input id="enableTomorrow" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusTomorrow"></div>
+    <div class="key-row"><input id="tomorrowKey" type="password" placeholder="Tomorrow.io API key"><a class="api-link" href="https://www.tomorrow.io/weather-api/" target="_blank" rel="noopener noreferrer">Get free API key ↗</a></div>
+  </div>
+  <div class="provider-setting">
+    <div class="provider-head"><div><div class="provider-name">Weatherbit</div><div class="provider-meta">Always-free plan · 7-day daily forecast · non-commercial use</div></div><label class="toggle"><input id="enableWeatherbit" type="checkbox" checked> Enabled</label></div><div class="provider-status" id="statusWeatherbit"></div>
+    <div class="key-row"><input id="weatherbitKey" type="password" placeholder="Weatherbit API key"><a class="api-link" href="https://www.weatherbit.io/account/create" target="_blank" rel="noopener noreferrer">Get free API key ↗</a></div>
+  </div>
+</div>
+<div class="save-panel">
+  <div>
+    <div class="save-summary" id="saveSummary">Settings are stored only in this browser. Keyed providers are called only when enabled and a key is present.</div>
+    <div class="save-feedback" id="saveFeedback">✓ Provider settings saved</div>
+  </div>
+  <button class="btn" id="saveKeysBtn" type="button">Save Provider Settings</button>
+</div>
+</details>
+<footer>
+  <span>© <span id="year"></span> mikejamesgreco.me LLC. All rights reserved. | <a href="https://github.com/mikejamesgreco/tgw-weather#readme" target="_blank" rel="noopener noreferrer">GitHub / README ↗</a></span>
+</footer>
+</div>
+<div class="help-modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="help-card">
+    <div class="help-head">
+      <h2 id="helpTitle">TGW Weather Help</h2>
+      <button class="help-close" id="helpCloseBtn" type="button">Close</button>
+    </div>
+    <p><strong>TGW Weather — The Greco Weather</strong> is a lightweight single-file weather comparison tool. It queries multiple forecast providers for the same location and shows their results side by side along with simple consensus values.</p>
+
+    <h3>How the consensus works</h3>
+    <p>High temperature, low temperature, chance of rain, and wind speed are arithmetic averages of the providers that successfully reported each metric. The range shown beneath each consensus value helps show how much the providers agree or disagree.</p>
+
+    <h3>Weather providers</h3>
+    <p>Open-Meteo and the U.S. National Weather Service can be used without an API key. WeatherAPI.com, OpenWeather, Visual Crossing, Tomorrow.io, and Weatherbit can be included with personal API keys. A provider can be disabled at any time in Weather Services &amp; API Keys.</p>
+
+    <h3>API keys and saving settings</h3>
+    <p>Provider enable/disable choices and API keys are saved in this browser using local storage. Keys are not embedded in the distributed TGW HTML file, but browser JavaScript must be able to read a saved key in order to send it to the selected provider.</p>
+
+    <h3>Location input</h3>
+    <p>You can enter a ZIP/postal code, a city and state, or latitude/longitude. TGW resolves the location first, then sends the same coordinates to each enabled provider so the comparison is based on the same point.</p>
+
+    <h3>Provider differences</h3>
+    <p>Forecast services use different models, update schedules, grids, and interpretation methods. TGW does not replace any official forecast service; it provides a quick way to compare several independent forecasts and see their spread.</p>
+
+    <h3>Privacy and local-first design</h3>
+    <p>TGW is designed as a Single-File Local Application (SFLA). The interface runs in your browser. Forecast requests are sent directly to the enabled weather providers. Saved provider settings remain in the browser's local storage unless you clear them.</p>
+
+    <h3>Documentation and source</h3>
+    <p><a href="https://github.com/mikejamesgreco/tgw-weather#readme" target="_blank" rel="noopener noreferrer">Open the TGW Weather README / source on GitHub ↗</a></p>
+
+    <h3>Version</h3>
+    <p>Application version: <strong id="helpVersion"></strong></p>
+  </div>
+</div>
+<script>
+"use strict";
+const APP_VERSION="v0006",$=id=>document.getElementById(id),state={forecasts:[]};
+const WMO={0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Rime fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",71:"Light snow",73:"Snow",75:"Heavy snow",80:"Rain showers",81:"Rain showers",82:"Heavy rain showers",85:"Snow showers",86:"Heavy snow showers",95:"Thunderstorms",96:"Thunderstorms / hail",99:"Strong thunderstorms / hail"};
+const esc=s=>String(s??"").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;","'":"&#39;"}[c]));
+const finite=v=>Number.isFinite(v),fmtT=v=>finite(v)?Math.round(v)+"°":"—",fmtP=v=>finite(v)?Math.round(v)+"%":"—",fmtW=v=>finite(v)?Math.round(v)+" mph":"—";
+function mean(a){const v=a.filter(finite);return v.length?v.reduce((x,y)=>x+y,0)/v.length:null}
+function range(a,suffix){const v=a.filter(finite);if(!v.length)return"No comparable values";const lo=Math.min(...v),hi=Math.max(...v);return lo===hi?`All reporting ${Math.round(lo)}${suffix}`:`Range ${Math.round(lo)}–${Math.round(hi)}${suffix}`}
+function setStatus(t,k=""){$("status").textContent=t;$("status").className="status "+k}
+async function json(url,opts={}){const r=await fetch(url,{cache:"no-store",...opts});if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}
+function parseCoords(q){const m=q.trim().match(/^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)$/);if(!m)return null;const latitude=+m[1],longitude=+m[2];if(Math.abs(latitude)>90||Math.abs(longitude)>180)return null;return{latitude,longitude,name:`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,country_code:""}}
+async function geocode(q){const d=parseCoords(q);if(d)return d;const j=await json("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(q.trim())+"&count=1&language=en&format=json");if(!j.results?.length)throw new Error("Location not found.");return j.results[0]}
+async function openMeteo(l){const q=new URLSearchParams({latitude:l.latitude,longitude:l.longitude,daily:"weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max",temperature_unit:"fahrenheit",wind_speed_unit:"mph",timezone:"auto",forecast_days:"1"}),j=await json("https://api.open-meteo.com/v1/forecast?"+q),d=j.daily||{};return{source:"Open-Meteo",badge:"No key",condition:WMO[d.weather_code?.[0]]||"Forecast available",high:+d.temperature_2m_max?.[0],low:+d.temperature_2m_min?.[0],rain:+d.precipitation_probability_max?.[0],wind:+d.wind_speed_10m_max?.[0],details:"https://open-meteo.com/en/docs",note:"Global forecast"}}
+async function nws(l){const p=await json(`https://api.weather.gov/points/${(+l.latitude).toFixed(4)},${(+l.longitude).toFixed(4)}`,{headers:{Accept:"application/geo+json"}}),u=p.properties?.forecast;if(!u)throw new Error("NWS forecast unavailable.");const j=await json(u,{headers:{Accept:"application/geo+json"}}),a=j.properties?.periods||[];if(!a.length)throw new Error("No NWS periods returned.");const d=a.find(x=>x.isDaytime),n=a.find(x=>!x.isDaytime),first=a.slice(0,2),pops=first.map(x=>+x.probabilityOfPrecipitation?.value).filter(finite),winds=first.map(x=>Math.max(...((x.windSpeed||"").match(/\d+/g)||[]).map(Number))).filter(finite);return{source:"NWS",badge:"U.S.",condition:d?.shortForecast||n?.shortForecast||a[0].shortForecast,high:d?+d.temperature:null,low:n?+n.temperature:null,rain:pops.length?Math.max(...pops):null,wind:winds.length?Math.max(...winds):null,details:`https://forecast.weather.gov/MapClick.php?lat=${l.latitude}&lon=${l.longitude}`,note:"National Weather Service"}}
+async function weatherApi(l,key){const q=new URLSearchParams({key,q:`${l.latitude},${l.longitude}`,days:"1",aqi:"no",alerts:"no"}),j=await json("https://api.weatherapi.com/v1/forecast.json?"+q),d=j.forecast?.forecastday?.[0]?.day;if(!d)throw new Error("No WeatherAPI forecast returned.");return{source:"WeatherAPI.com",badge:"Your key",optional:true,condition:d.condition?.text||"Forecast available",high:+d.maxtemp_f,low:+d.mintemp_f,rain:+d.daily_chance_of_rain,wind:+d.maxwind_mph,details:"https://www.weatherapi.com/",note:"Optional free-tier provider"}}
+async function openWeather(l,key){const q=new URLSearchParams({lat:l.latitude,lon:l.longitude,appid:key,units:"imperial"}),j=await json("https://api.openweathermap.org/data/2.5/forecast?"+q),tz=+j.city?.timezone||0,now=new Date(Date.now()+tz*1000),rows=(j.list||[]).filter(x=>{const t=new Date((x.dt+tz)*1000);return t.getUTCFullYear()===now.getUTCFullYear()&&t.getUTCMonth()===now.getUTCMonth()&&t.getUTCDate()===now.getUTCDate()});const r=rows.length?rows:(j.list||[]).slice(0,8);if(!r.length)throw new Error("No OpenWeather forecast returned.");const hs=r.map(x=>+x.main?.temp_max).filter(finite),ls=r.map(x=>+x.main?.temp_min).filter(finite),ps=r.map(x=>+x.pop*100).filter(finite),ws=r.map(x=>+x.wind?.speed).filter(finite),mid=r[Math.floor(r.length/2)];return{source:"OpenWeather",badge:"Your key",optional:true,condition:mid?.weather?.[0]?.description||"Forecast available",high:Math.max(...hs),low:Math.min(...ls),rain:ps.length?Math.max(...ps):null,wind:ws.length?Math.max(...ws):null,details:"https://openweathermap.org/",note:"Derived from free 3-hour forecast"}}
+async function visualCrossing(l,key){const loc=`${l.latitude},${l.longitude}`,q=new URLSearchParams({unitGroup:"us",include:"days",elements:"datetime,tempmax,tempmin,precipprob,windspeed,conditions",key,contentType:"json"}),j=await json("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"+encodeURIComponent(loc)+"?"+q),d=j.days?.[0];if(!d)throw new Error("No Visual Crossing forecast returned.");return{source:"Visual Crossing",badge:"Your key",optional:true,condition:d.conditions||"Forecast available",high:+d.tempmax,low:+d.tempmin,rain:+d.precipprob,wind:+d.windspeed,details:"https://www.visualcrossing.com/weather/",note:"Free-plan global forecast"}}
+async function tomorrowIo(l,key){const q=new URLSearchParams({location:`${l.latitude},${l.longitude}`,apikey:key,units:"imperial"}),j=await json("https://api.tomorrow.io/v4/weather/forecast?"+q),d=j.timelines?.daily?.[0]?.values;if(!d)throw new Error("No Tomorrow.io daily forecast returned.");const rain=[+d.precipitationProbabilityAvg,+d.precipitationProbabilityMax].find(finite),wind=[+d.windSpeedMax,+d.windSpeedAvg].find(finite);return{source:"Tomorrow.io",badge:"Your key",optional:true,condition:finite(+d.weatherCodeMax)?`Weather code ${d.weatherCodeMax}`:"Forecast available",high:+d.temperatureMax,low:+d.temperatureMin,rain,wind,details:"https://www.tomorrow.io/weather/",note:"Free API forecast"}}
+async function weatherbit(l,key){const q=new URLSearchParams({lat:l.latitude,lon:l.longitude,key,days:"1",units:"I"}),j=await json("https://api.weatherbit.io/v2.0/forecast/daily?"+q),d=j.data?.[0];if(!d)throw new Error("No Weatherbit forecast returned.");return{source:"Weatherbit",badge:"Your key",optional:true,condition:d.weather?.description||"Forecast available",high:+d.max_temp,low:+d.min_temp,rain:+d.pop,wind:+d.wind_spd,details:"https://www.weatherbit.io/",note:"Free daily forecast (non-commercial plan)"}}
+
+function render(){const tb=$("forecastRows"),cm=$("forecastCards");tb.innerHTML=cm.innerHTML="";for(const f of state.forecasts){const tr=document.createElement("tr");tr.innerHTML=`<td><div class="source">${esc(f.source)}</div><span class="badge ${f.optional?"optional":""}">${esc(f.badge)}</span><div class="note">${esc(f.note)}</div></td><td>${esc(f.condition)}</td><td>${fmtT(f.high)}</td><td>${fmtT(f.low)}</td><td>${fmtP(f.rain)}</td><td>${fmtW(f.wind)}</td><td><a href="${esc(f.details)}" target="_blank" rel="noopener noreferrer">Details ↗</a></td>`;tb.appendChild(tr);const c=document.createElement("article");c.className="card";c.innerHTML=`<div class="card-top"><div><h3>${esc(f.source)}</h3><span class="badge ${f.optional?"optional":""}">${esc(f.badge)}</span></div><a href="${esc(f.details)}" target="_blank" rel="noopener noreferrer">Details ↗</a></div><div class="desc">${esc(f.condition)}</div><div class="mini-grid"><div class="mini"><span>High</span><b>${fmtT(f.high)}</b></div><div class="mini"><span>Low</span><b>${fmtT(f.low)}</b></div><div class="mini"><span>Rain</span><b>${fmtP(f.rain)}</b></div></div>`;cm.appendChild(c)}const h=state.forecasts.map(x=>x.high),l=state.forecasts.map(x=>x.low),p=state.forecasts.map(x=>x.rain),w=state.forecasts.map(x=>x.wind);$("avgHigh").textContent=fmtT(mean(h));$("highRange").textContent=range(h,"°");$("avgLow").textContent=fmtT(mean(l));$("lowRange").textContent=range(l,"°");$("avgRain").textContent=fmtP(mean(p));$("rainRange").textContent=range(p,"%");$("avgWind").textContent=fmtW(mean(w));$("windRange").textContent=range(w," mph");$("sourceCount").textContent=state.forecasts.length;$("sourceSub").textContent=state.forecasts.length?`${state.forecasts.length} provider${state.forecasts.length===1?"":"s"} returned data`:"No forecast yet"}
+async function forecast(){const q=$("locationInput").value.trim();if(!q){setStatus("Enter a location.","error");return}$("forecastBtn").disabled=true;state.forecasts=[];render();try{setStatus("Finding location…");const l=await geocode(q),name=[l.name,l.admin1,l.country].filter(Boolean).join(", ");$("locationName").textContent=name||`${l.latitude}, ${l.longitude}`;$("locationMeta").textContent=`${(+l.latitude).toFixed(4)}, ${(+l.longitude).toFixed(4)}${l.timezone?" · "+l.timezone:""}`;$("locationBox").classList.add("show");setStatus("Gathering forecasts…");const jobs=[],cc=String(l.country_code||"").toUpperCase(),isUs=cc==="US"||(!cc&&+l.latitude>=18&&+l.latitude<=72&&+l.longitude>=-180&&+l.longitude<=-60);if($("enableOpenMeteo").checked)jobs.push({name:"Open-Meteo",run:()=>openMeteo(l)});if($("enableNws").checked&&isUs)jobs.push({name:"NWS",run:()=>nws(l)});const wak=$("weatherApiKey").value.trim(),owk=$("openWeatherKey").value.trim(),vck=$("visualCrossingKey").value.trim(),tmk=$("tomorrowKey").value.trim(),wbk=$("weatherbitKey").value.trim();if($("enableWeatherApi").checked&&wak)jobs.push({name:"WeatherAPI.com",run:()=>weatherApi(l,wak)});if($("enableOpenWeather").checked&&owk)jobs.push({name:"OpenWeather",run:()=>openWeather(l,owk)});if($("enableVisualCrossing").checked&&vck)jobs.push({name:"Visual Crossing",run:()=>visualCrossing(l,vck)});if($("enableTomorrow").checked&&tmk)jobs.push({name:"Tomorrow.io",run:()=>tomorrowIo(l,tmk)});if($("enableWeatherbit").checked&&wbk)jobs.push({name:"Weatherbit",run:()=>weatherbit(l,wbk)});if(!jobs.length)throw new Error("No weather providers are enabled/configured.");const rs=await Promise.allSettled(jobs.map(x=>x.run())),fails=[];rs.forEach((r,i)=>r.status==="fulfilled"?state.forecasts.push(r.value):fails.push(`${jobs[i].name}: ${r.reason?.message||"failed"}`));render();if(!state.forecasts.length)throw new Error(fails.join(" · ")||"No provider returned data.");setStatus(fails.length?`${state.forecasts.length} source(s) loaded; ${fails.length} unavailable.`:`${state.forecasts.length} source(s) loaded.`,"ok");if(fails.length)console.warn("TGW provider failures",fails)}catch(e){setStatus(e.message||"Forecast failed.","error")}finally{$("forecastBtn").disabled=false}}
+
+function providerCardFor(id){return $(id)?.closest(".provider-setting")}
+function updateProviderUi(){
+  const defs=[
+    ["enableOpenMeteo",null,"statusOpenMeteo"],
+    ["enableNws",null,"statusNws"],
+    ["enableWeatherApi","weatherApiKey","statusWeatherApi"],
+    ["enableOpenWeather","openWeatherKey","statusOpenWeather"],
+    ["enableVisualCrossing","visualCrossingKey","statusVisualCrossing"],
+    ["enableTomorrow","tomorrowKey","statusTomorrow"],
+    ["enableWeatherbit","weatherbitKey","statusWeatherbit"]
+  ];
+  let enabled=0, ready=0, waiting=0;
+  for(const [toggleId,keyId,statusId] of defs){
+    const toggle=$(toggleId), card=providerCardFor(toggleId), status=$(statusId);
+    const isEnabled=!!toggle?.checked;
+    const hasKey=!keyId || !!$(keyId).value.trim();
+    card?.classList.toggle("disabled",!isEnabled);
+    card?.classList.toggle("no-key",isEnabled && !!keyId && !hasKey);
+    if(!isEnabled){
+      status.textContent="Disabled — will not be called";
+      status.className="provider-status skipped";
+    }else if(!hasKey){
+      status.textContent="Enabled — add an API key to include this source";
+      status.className="provider-status skipped";
+      enabled++; waiting++;
+    }else{
+      status.textContent=keyId?"Enabled — ready to call":"Enabled — ready to call";
+      status.className="provider-status ready";
+      enabled++; ready++;
+    }
+  }
+  $("saveSummary").innerHTML=`<strong>${enabled}</strong> enabled · <strong>${ready}</strong> ready to call${waiting?` · <strong>${waiting}</strong> waiting for API key`:""}. Settings are stored only in this browser.`;
+}
+function showSavedFeedback(){
+  const b=$("saveKeysBtn"), f=$("saveFeedback");
+  const original="Save Provider Settings";
+  b.textContent="✓ Settings Saved";
+  b.classList.add("saved");
+  f.classList.add("show");
+  clearTimeout(showSavedFeedback._t);
+  showSavedFeedback._t=setTimeout(()=>{
+    b.textContent=original;
+    b.classList.remove("saved");
+    f.classList.remove("show");
+  },1800);
+}
+const PROVIDERS=[["enableOpenMeteo","tgw.enableOpenMeteo"],["enableNws","tgw.enableNws"],["enableWeatherApi","tgw.enableWeatherApi"],["enableOpenWeather","tgw.enableOpenWeather"],["enableVisualCrossing","tgw.enableVisualCrossing"],["enableTomorrow","tgw.enableTomorrow"],["enableWeatherbit","tgw.enableWeatherbit"]],KEYS=[["weatherApiKey","tgw.weatherApiKey"],["openWeatherKey","tgw.openWeatherKey"],["visualCrossingKey","tgw.visualCrossingKey"],["tomorrowKey","tgw.tomorrowKey"],["weatherbitKey","tgw.weatherbitKey"]];
+function loadKeys(){try{for(const[id,key]of KEYS)$(id).value=localStorage.getItem(key)||"";for(const[id,key]of PROVIDERS){const v=localStorage.getItem(key);$(id).checked=v===null?true:v==="true"}}catch(_){}updateProviderUi()}
+function saveKeys(){try{for(const[id,key]of KEYS)localStorage.setItem(key,$(id).value.trim());for(const[id,key]of PROVIDERS)localStorage.setItem(key,String($(id).checked));updateProviderUi();showSavedFeedback();setStatus("Provider settings saved in this browser.","ok")}catch(_){setStatus("Browser storage unavailable.","error")}}
+$("forecastBtn").addEventListener("click",forecast);$("locationInput").addEventListener("keydown",e=>{if(e.key==="Enter")forecast()});
+function openHelp(){
+  $("helpVersion").textContent=APP_VERSION;
+  $("helpModal").classList.add("open");
+  $("helpCloseBtn").focus();
+}
+function closeHelp(){
+  $("helpModal").classList.remove("open");
+  $("helpBtn").focus();
+}
+
+$("saveKeysBtn").addEventListener("click",saveKeys);
+$("helpBtn").addEventListener("click",openHelp);
+$("helpCloseBtn").addEventListener("click",closeHelp);
+$("helpModal").addEventListener("click",e=>{if(e.target===$("helpModal"))closeHelp()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeHelp()});
+for(const [id] of PROVIDERS)$(id).addEventListener("change",updateProviderUi);
+for(const [id] of KEYS)$(id).addEventListener("input",updateProviderUi);
+$("year").textContent=new Date().getFullYear();loadKeys();render();
+</script>
+
+</body>
+</html>
